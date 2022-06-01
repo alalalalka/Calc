@@ -11,6 +11,9 @@ public class Main {
         if (array.length > 3){
             throw new IllegalArgumentException("Формат математической операции не удовлетворяет заданию");
         }
+        if (array.length < 3){
+            throw new IllegalArgumentException("Формат математической операции не удовлетворяет заданию");
+        }
 
         String a = array[0];
         String b = array[1];
