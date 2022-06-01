@@ -1,43 +1,55 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Введите выражение: ");
 
+        String text = sc.nextLine();
+        String[] array = text.split(" ");
+        if (array.length > 3){
+            throw new IllegalArgumentException("Формат математической операции не удовлетворяет заданию");
+        }
 
-        int num1 = 0;
+        String a = array[0];
+        String b = array[1];
+        String c = array[2];
+
         int test = 1;
-        if (sc.hasNext()) {
-            if (sc.hasNextInt()) {
-                num1 = sc.nextInt();
-                test++;
-            } else {
-                num1 = convert(sc.next());
-                test--;
-            }
+        String[] arabNum = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        String[] romNum = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
+
+        int num1;
+        if (Arrays.asList(arabNum).contains(a)) {
+            num1 = Integer.parseInt(a);
+            test++;
+        } else if (Arrays.asList(romNum).contains(a)) {
+            num1 = convert(a);
+            test--;
+        } else {
+            throw new IllegalArgumentException("Неверное значение аргумента");
         }
 
-        String op = sc.next();
-        char oper = op.charAt(0);
+        char oper = b.charAt(0);
 
-
-        int num2 = 0;
-        if (sc.hasNext()) {
-            if (sc.hasNextInt()) {
-                if (test == 2) {
-                    num2 = sc.nextInt();
-                } else {
-                    throw new IllegalArgumentException("Используются одновременно разные системы счисления");
-                }
+        int num2;
+        if (Arrays.asList(arabNum).contains(c)) {
+            if (test == 2) {
+                num2 = Integer.parseInt(c);
             } else {
-                if (test == 0) {
-                    num2 = convert(sc.next());
-                } else {
-                    throw new IllegalArgumentException("Используются одновременно разные системы счисления");
-                }
+                throw new IllegalArgumentException("Используются одновременно разные системы счисления");
             }
+        } else if (Arrays.asList(romNum).contains(c)) {
+            if (test == 0) {
+                num2 = convert(c);
+            } else {
+                throw new IllegalArgumentException("Используются одновременно разные системы счисления");
+            }
+        } else {
+            throw new IllegalArgumentException("Неверное значение аргумента");
         }
+
 
         int result = calc(num1, num2, oper);
         if (num1 < 0 || num1 > 10 || num2 < 0 || num2 > 10) throw new IllegalArgumentException("Неверное значение");
@@ -47,7 +59,6 @@ public class Main {
         } else {
             System.out.println(result);
         }
-
     }
 
 
